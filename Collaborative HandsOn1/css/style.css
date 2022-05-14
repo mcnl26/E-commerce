@@ -154,3 +154,7 @@ display: block;
 #storepage {
 padding-top: 100px;
 }
+
+.homeSection h1 {
+font-family: "Permanent Marker", cursive;
+}

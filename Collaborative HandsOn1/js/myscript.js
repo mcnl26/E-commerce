@@ -78,8 +78,7 @@ function addItemToCart(title, price, imageSrc) {
         <span class="cart-price cart-column">${price}</span>
         <div class="cart-quantity cart-column">
             <input class="cart-quantity-input" type="number" value="1" step="1" min="1" max="5" id="input-quantity">
-            <button class="btn btn-primary" type="button" onclick="handleMyInput()" style="width: 40px; font-size: 10px; padding-left: 0px; padding-right: 0px; margin-right: 2px;">Confirm</button>
-            <button class="btn btn-danger" type="button" style="width: 60px; font-size: 10px; padding-left: 2px; padding-right: 2px; margin-right: 2px;">REMOVE</button>
+            <button class="btn btn-danger" type="button">REMOVE</button>
         </div>`
     cartRow.innerHTML = cartRowContents
     cartItems.append(cartRow)
@@ -113,6 +112,6 @@ function handleMyInput() {
     let stocks = document.getElementById("input-quantity").value;
     let max = 5;
     if (stocks > max) {
-        alert ("Max stock reached:");
+        alert ("Max stock reached: Purchase only 5 and below pairs of shoes per item");
     }
 }
