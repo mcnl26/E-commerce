@@ -30,7 +30,16 @@ function purchaseClicked() {
     alert('Thank you for your purchase')
     var cartItems = document.getElementsByClassName('cart-items')[0]
     while (cartItems.hasChildNodes()) {
-        cartItems.removeChild(cartItems.firstChild)
+        let item = cartItems.firstChild
+        if(item.nodeName != "#text"){
+            var quantity = parseInt(item.getElementsByClassName('cart-quantity-input')[0].value)
+            var itemImgSrc = item.getElementsByClassName('cart-item-image')[0].getAttribute('src')
+    
+            var shopCard = document.querySelector(`.card [src="${itemImgSrc}"]`).parentElement
+            var stockElement = shopCard.getElementsByClassName('stock-number')[0]
+            stockElement.innerHTML = parseInt(stockElement.innerHTML) - quantity
+        }
+        cartItems.removeChild(item);
     }
     updateCartTotal()
 }
@@ -54,7 +63,8 @@ function addToCartClicked(event) {
     var shopItem = button.parentElement.parentElement
     var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
     var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
-    var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
+    //From .src changed to .getAttribute('src') because the value is being changed from relative path to absolute
+    var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].getAttribute('src');
     addItemToCart(title, price, imageSrc)
     updateCartTotal()
 }
@@ -77,7 +87,7 @@ function addItemToCart(title, price, imageSrc) {
         </div>
         <span class="cart-price cart-column">${price}</span>
         <div class="cart-quantity cart-column">
-            <input class="cart-quantity-input" type="number" value="1" step="1" min="1" max="5" id="input-quantity">
+            <input class="cart-quantity-input" type="number" value="1">
             <button class="btn btn-danger" type="button">REMOVE</button>
         </div>`
     cartRow.innerHTML = cartRowContents
@@ -105,13 +115,4 @@ function updateCartTotal() {
 function displayDate () {
     let thedate = document.getElementById("orderdate").value;
     document.getElementById("displayOrderDate").innerHTML = thedate;
-}
-
-
-function handleMyInput() {
-    let stocks = document.getElementById("input-quantity").value;
-    let max = 5;
-    if (stocks > max) {
-        alert ("Max stock reached: Purchase only 5 and below pairs of shoes per item");
-    }
 }
